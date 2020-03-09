@@ -53,7 +53,7 @@ public class Growth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.GetComponent<Growth>() == null)
+        if (collision.collider.GetComponent<Controller>() != null)
             touching = true;
     }
 
