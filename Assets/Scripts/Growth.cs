@@ -5,7 +5,7 @@ using UnityEngine;
 public class Growth : MonoBehaviour
 {
     public  Vector2 growthSpeed;
-    public  Vector2 growthMax;
+    public  Vector2 growthResult;
     private Vector2 growthBase;
     private Vector2 growthSpeedOriginal;
     public bool touching;
@@ -21,13 +21,13 @@ public class Growth : MonoBehaviour
     {
         if (touching)
         {
-            if (transform.lossyScale.x < growthMax.x)
+            if ((transform.lossyScale.x < growthResult.x && growthSpeed.x > 0) || (growthResult.x < transform.lossyScale.x && growthSpeed.x < 0))
             {
                 transform.localScale += new Vector3(growthSpeed.x * Time.deltaTime, 0.0f, 0.0f);
                 transform.position += new Vector3((growthSpeed.x / 2) * Time.deltaTime, 0.0f, 0.0f);
             }
 
-            if (transform.lossyScale.y < growthMax.y)
+            if ((transform.lossyScale.y < growthResult.y && growthSpeed.y > 0) || (growthResult.y < transform.lossyScale.y && growthSpeed.y < 0))
             {
                 transform.localScale += new Vector3(0.0f, growthSpeed.y * Time.deltaTime, 0.0f);
                 transform.position += new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
@@ -35,40 +35,28 @@ public class Growth : MonoBehaviour
 
             growthSpeed -= growthSpeed / 10.0f;
 
-            if (growthSpeed.x < 0.1f)
+            if (Mathf.Abs(growthSpeed.x) < 0.1f)
                 growthSpeed.x = 0.0f;
-            if (growthSpeed.y < 0.1f)
+            if (Mathf.Abs(growthSpeed.y) < 0.1f)
                 growthSpeed.y = 0.0f;
         }
         else
         {
-            if (transform.lossyScale.x > growthBase.x)
+            if ((transform.lossyScale.x > growthBase.x && growthSpeed.x < 0) || (growthBase.x > transform.lossyScale.x && growthSpeed.x > 0))
             {
                 transform.localScale -= new Vector3(growthSpeed.x * Time.deltaTime, 0.0f, 0.0f);
                 transform.position -= new Vector3((growthSpeed.x / 2)* Time.deltaTime, 0.0f, 0.0f);
             }
 
-            if (transform.lossyScale.y > growthBase.y)
+            if ((transform.lossyScale.y > growthBase.y && growthSpeed.y < 0) || (growthBase.y > transform.lossyScale.y && growthSpeed.y > 0))
             {
                 transform.localScale -= new Vector3(0.0f, growthSpeed.y * Time.deltaTime, 0.0f);
                 transform.position -= new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
             }
         }
-        if (growthSpeed.x < growthSpeedOriginal.x)
+        if (Mathf.Abs(growthSpeed.x) < Mathf.Abs(growthSpeedOriginal.x))
             growthSpeed.x += growthSpeed.x / 10.0f;
-        if (growthSpeed.y < growthSpeedOriginal.y)
+        if (Mathf.Abs(growthSpeed.y) < Mathf.Abs(growthSpeedOriginal.y))
             growthSpeed.y += growthSpeed.y / 10.0f;
-
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.GetComponent<Controller>() != null)
-            touching = true;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        touching = false;
     }
 }

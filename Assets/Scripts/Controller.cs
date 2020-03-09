@@ -8,18 +8,26 @@ public class Controller : MonoBehaviour
     public GameObject[] walls;
     public float gravity;
     public Vector2 currentSpeed;
+    private float defaultGravity;
     // Start is called before the first frame update
     void Start()
     {
         col = GetComponent<Collider>();
         walls = GameObject.FindGameObjectsWithTag("Walls");
+        defaultGravity = gravity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (currentSpeed.y > -10.0f)
+        if (currentSpeed.y < 0.0f && gravity < currentSpeed.y * 1.1f)
+            gravity *= 1.1f;
+        else if (Input.GetKey(KeyCode.W) && gravity > defaultGravity * 0.4f)
+            gravity *= 0.9f;
+
+        if (currentSpeed.y > -gravity)
             currentSpeed.y -= gravity * Time.deltaTime;
+
         if (Input.GetKey(KeyCode.A))
         {
             currentSpeed.x -= 10.0f * Time.deltaTime;
@@ -69,7 +77,7 @@ public class Controller : MonoBehaviour
     {
         Vector2 speed;
         if (walls[index].GetComponent<SnapGrow>() != null)
-            speed = walls[index].GetComponent<SnapGrow>().growthSpeed * 2;
+            speed = walls[index].GetComponent<SnapGrow>().growthSpeed * 10;
         else
             return;
 
