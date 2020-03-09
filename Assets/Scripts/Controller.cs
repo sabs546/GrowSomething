@@ -4,23 +4,97 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    public Collider col;
+    public GameObject[] walls;
+    public float gravity;
+    public Vector2 currentSpeed;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider>();
+        walls = GameObject.FindGameObjectsWithTag("Walls");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (currentSpeed.y > -10.0f)
+            currentSpeed.y -= gravity * Time.deltaTime;
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(new Vector2(-10.0f, 0.0f));
+            currentSpeed.x -= 10.0f * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(new Vector2(10.0f, 0.0f));
+            currentSpeed.x += 10.0f * Time.deltaTime;
         }
+
+        Vector2 oldPos = transform.position;
+        transform.Translate(currentSpeed * Time.deltaTime);
+
+        for (int i = 0; i < walls.Length; i++)
+        {
+            switch (col.CheckCollision(walls[i].transform.position, walls[i].transform.lossyScale / 2, oldPos))
+            {
+                case 0:
+                    WallHit(i, false);
+                    break;
+                case 1: // Floor
+                    if (currentSpeed.y < 0.0f)
+                        currentSpeed.y = 0.0f;
+                    Punch(i, 1);
+                    WallHit(i, true);
+                    Debug.Log("Floor");
+                    break;
+                case 2: // Left
+                    Punch(i, 2);
+                    WallHit(i, true);
+                    Debug.Log("Left");
+                    break;
+                case 3: // Right
+                    Punch(i, 3);
+                    WallHit(i, true);
+                    Debug.Log("Right");
+                    break;
+                case 4: // Ceiling
+                    Punch(i, 4);
+                    WallHit(i, true);
+                    Debug.Log("Ceiling");
+                    break;
+            }
+        }
+    }
+
+    private void Punch(int index, int direction)
+    {
+        Vector2 speed;
+        if (walls[index].GetComponent<SnapGrow>() != null)
+            speed = walls[index].GetComponent<SnapGrow>().growthSpeed * 2;
+        else
+            return;
+
+        switch (direction)
+        {
+            case 1:
+                currentSpeed.y += speed.y;
+                break;
+            case 2:
+                currentSpeed.x -= speed.x;
+                break;
+            case 3:
+                currentSpeed.x += speed.x;
+                break;
+            case 4:
+                currentSpeed.y -= speed.y;
+                break;
+        }
+    }
+
+    private void WallHit(int index, bool value)
+    {
+        if (walls[index].GetComponent<Growth>() != null)
+            walls[index].GetComponent<Growth>().touching = value;
+        else if (walls[index].GetComponent<SnapGrow>() != null)
+            walls[index].GetComponent<SnapGrow>().touching = value;
     }
 }

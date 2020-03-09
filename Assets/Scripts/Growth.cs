@@ -8,7 +8,7 @@ public class Growth : MonoBehaviour
     public  Vector2 growthMax;
     private Vector2 growthBase;
     private Vector2 growthSpeedOriginal;
-    private bool touching;
+    public bool touching;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +22,17 @@ public class Growth : MonoBehaviour
         if (touching)
         {
             if (transform.lossyScale.x < growthMax.x)
+            {
                 transform.localScale += new Vector3(growthSpeed.x * Time.deltaTime, 0.0f, 0.0f);
+                transform.position += new Vector3((growthSpeed.x / 2) * Time.deltaTime, 0.0f, 0.0f);
+            }
+
             if (transform.lossyScale.y < growthMax.y)
+            {
                 transform.localScale += new Vector3(0.0f, growthSpeed.y * Time.deltaTime, 0.0f);
+                transform.position += new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
+            }
+
             growthSpeed -= growthSpeed / 10.0f;
 
             if (growthSpeed.x < 0.1f)
@@ -34,15 +42,17 @@ public class Growth : MonoBehaviour
         }
         else
         {
-            if (growthSpeed.x == 0.0f)
-                growthSpeed.x = 0.1f;
-            if (growthSpeed.y == 0.0f)
-                growthSpeed.y = 0.1f;
-
             if (transform.lossyScale.x > growthBase.x)
+            {
                 transform.localScale -= new Vector3(growthSpeed.x * Time.deltaTime, 0.0f, 0.0f);
+                transform.position -= new Vector3((growthSpeed.x / 2)* Time.deltaTime, 0.0f, 0.0f);
+            }
+
             if (transform.lossyScale.y > growthBase.y)
+            {
                 transform.localScale -= new Vector3(0.0f, growthSpeed.y * Time.deltaTime, 0.0f);
+                transform.position -= new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
+            }
         }
         if (growthSpeed.x < growthSpeedOriginal.x)
             growthSpeed.x += growthSpeed.x / 10.0f;

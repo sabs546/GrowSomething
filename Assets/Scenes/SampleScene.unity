@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &250544839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &350913659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -407,6 +409,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e921833b8037ae14cb8bfded50942c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  col: {fileID: 0}
+  walls: []
+  gravity: 20
+  currentSpeed: {x: 0, y: 0}
 --- !u!1001 &486218661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,6 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,6 +611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &557243229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -698,6 +706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &581746637 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -718,6 +727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &602768169 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -738,6 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 10}
   growthMax: {x: 0, y: 20}
+  touching: 0
 --- !u!1 &617675715 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -758,6 +769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &621716836 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -778,6 +790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &660242958 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -798,6 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &711778143 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -818,6 +832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &766895295
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1060,6 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &958250369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1302,6 +1318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &1174663970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1396,6 +1413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &1357947030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1403,10 +1421,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
         type: 3}
       propertyPath: m_Name
-      value: Floor (18)
+      value: SnapFloor
       objectReference: {fileID: 0}
     - target: {fileID: 5859188394624074942, guid: dac11aa43e18fe14a879e5ab9a643241,
         type: 3}
@@ -1490,6 +1512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1 &1457216339 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5859188394624074930, guid: dac11aa43e18fe14a879e5ab9a643241,
@@ -1509,6 +1532,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   growthMax: {x: 0, y: 10}
+  growthSpeed: {x: 0, y: 0}
+  touching: 0
 --- !u!1001 &1503376480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1603,6 +1628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &1604776009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1771,6 +1797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &1741962515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1865,6 +1892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   growthSpeed: {x: 0, y: 1}
   growthMax: {x: 0, y: 2}
+  touching: 0
 --- !u!1001 &1949724939
 PrefabInstance:
   m_ObjectHideFlags: 0
