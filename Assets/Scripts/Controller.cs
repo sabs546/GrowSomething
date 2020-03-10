@@ -8,6 +8,7 @@ public class Controller : MonoBehaviour
     public GameObject[] walls;
     public float gravity;
     public Vector2 currentSpeed;
+    public Vector2 topSpeed;
     private float defaultGravity;
     // Start is called before the first frame update
     void Start()
@@ -46,6 +47,14 @@ public class Controller : MonoBehaviour
             if (currentSpeed.x > 0.0f)
                 currentSpeed.x -= 10.0f * Time.deltaTime;
         }
+
+        if (currentSpeed.x > topSpeed.x)
+            currentSpeed.x = topSpeed.x;
+        else if (currentSpeed.x < -topSpeed.x)
+            currentSpeed.x = -topSpeed.x;
+
+        if (currentSpeed.y < -topSpeed.y)
+            currentSpeed.y = -topSpeed.y;
 
         Vector2 oldPos = transform.position;
         transform.Translate(currentSpeed * Time.deltaTime);
