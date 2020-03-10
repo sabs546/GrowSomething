@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Growth : MonoBehaviour
 {
+    public  bool    xCentred;
+    public  bool    yCentred;
     public  Vector2 growthSpeed;
     public  Vector2 growthResult;
     private Vector2 growthBase;
@@ -24,13 +26,15 @@ public class Growth : MonoBehaviour
             if ((transform.lossyScale.x < growthResult.x && growthSpeed.x > 0) || (growthResult.x < transform.lossyScale.x && growthSpeed.x < 0))
             {
                 transform.localScale += new Vector3(growthSpeed.x * Time.deltaTime, 0.0f, 0.0f);
-                transform.position += new Vector3((growthSpeed.x / 2) * Time.deltaTime, 0.0f, 0.0f);
+                if (!xCentred)
+                    transform.position += new Vector3((growthSpeed.x / 2) * Time.deltaTime, 0.0f, 0.0f);
             }
 
             if ((transform.lossyScale.y < growthResult.y && growthSpeed.y > 0) || (growthResult.y < transform.lossyScale.y && growthSpeed.y < 0))
             {
                 transform.localScale += new Vector3(0.0f, growthSpeed.y * Time.deltaTime, 0.0f);
-                transform.position += new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
+                if (!yCentred)
+                    transform.position += new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
             }
 
             growthSpeed -= growthSpeed / 10.0f;
@@ -45,13 +49,15 @@ public class Growth : MonoBehaviour
             if ((transform.lossyScale.x > growthBase.x && growthSpeed.x < 0) || (growthBase.x > transform.lossyScale.x && growthSpeed.x > 0))
             {
                 transform.localScale -= new Vector3(growthSpeed.x * Time.deltaTime, 0.0f, 0.0f);
-                transform.position -= new Vector3((growthSpeed.x / 2)* Time.deltaTime, 0.0f, 0.0f);
+                if (!xCentred)
+                    transform.position -= new Vector3((growthSpeed.x / 2)* Time.deltaTime, 0.0f, 0.0f);
             }
 
             if ((transform.lossyScale.y > growthBase.y && growthSpeed.y < 0) || (growthBase.y > transform.lossyScale.y && growthSpeed.y > 0))
             {
                 transform.localScale -= new Vector3(0.0f, growthSpeed.y * Time.deltaTime, 0.0f);
-                transform.position -= new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
+                if (!yCentred)
+                    transform.position -= new Vector3(0.0f, (growthSpeed.y / 2) * Time.deltaTime, 0.0f);
             }
         }
         if (Mathf.Abs(growthSpeed.x) < Mathf.Abs(growthSpeedOriginal.x))

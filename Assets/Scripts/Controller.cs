@@ -32,9 +32,19 @@ public class Controller : MonoBehaviour
         {
             currentSpeed.x -= 10.0f * Time.deltaTime;
         }
+        else
+        {
+            if (currentSpeed.x < 0.0f)
+                currentSpeed.x += 10.0f * Time.deltaTime;
+        }
         if (Input.GetKey(KeyCode.D))
         {
             currentSpeed.x += 10.0f * Time.deltaTime;
+        }
+        else
+        {
+            if (currentSpeed.x > 0.0f)
+                currentSpeed.x -= 10.0f * Time.deltaTime;
         }
 
         Vector2 oldPos = transform.position;
@@ -55,16 +65,22 @@ public class Controller : MonoBehaviour
                     Debug.Log("Floor");
                     break;
                 case 2: // Left
+                    if (currentSpeed.x > 0.0f)
+                        currentSpeed.x = 0.0f;
                     Punch(i, 2);
                     WallHit(i, true);
                     Debug.Log("Left");
                     break;
                 case 3: // Right
+                    if (currentSpeed.x < 0.0f)
+                        currentSpeed.x = 0.0f;
                     Punch(i, 3);
                     WallHit(i, true);
                     Debug.Log("Right");
                     break;
                 case 4: // Ceiling
+                    if (currentSpeed.y > 0.0f)
+                        currentSpeed.y = 0.0f;
                     Punch(i, 4);
                     WallHit(i, true);
                     Debug.Log("Ceiling");
@@ -87,10 +103,10 @@ public class Controller : MonoBehaviour
                 currentSpeed.y += speed.y;
                 break;
             case 2:
-                currentSpeed.x -= speed.x;
+                currentSpeed.x += speed.x;
                 break;
             case 3:
-                currentSpeed.x += speed.x;
+                currentSpeed.x -= speed.x;
                 break;
             case 4:
                 currentSpeed.y -= speed.y;
