@@ -11,6 +11,7 @@ public class SnapGrow : MonoBehaviour
     public  Vector2 growthResult;
     public  Vector2 growthSpeed;
     private Vector2 growthBase;
+    public Animator anim;
     public bool ready;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class SnapGrow : MonoBehaviour
             grow = true;
         if (grow)
         {
+            anim.SetBool("Hit", true);
             if (transform.localScale.x < growthResult.x)
             {
                 transform.localScale += new Vector3(growthSpeed.x, 0.0f);
@@ -53,6 +55,7 @@ public class SnapGrow : MonoBehaviour
         }
         else
         {
+            anim.SetBool("Hit", false);
             ready = false;
             if (transform.localScale.x > growthBase.x)
             {
