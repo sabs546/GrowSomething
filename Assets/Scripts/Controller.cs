@@ -9,6 +9,7 @@ public class Controller : MonoBehaviour
     public float gravity;
     public Vector2 currentSpeed;
     public Vector2 topSpeed;
+    private Vector2 oldPos;
     private float defaultGravity;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class Controller : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (currentSpeed.y < 0.0f && gravity < currentSpeed.y * 1.1f)
             gravity *= 1.1f;
@@ -56,7 +57,7 @@ public class Controller : MonoBehaviour
         if (currentSpeed.y < -topSpeed.y)
             currentSpeed.y = -topSpeed.y;
 
-        Vector2 oldPos = transform.position;
+        oldPos = transform.position;
         transform.Translate(currentSpeed * Time.deltaTime);
 
         for (int i = 0; i < walls.Length; i++)
@@ -74,14 +75,14 @@ public class Controller : MonoBehaviour
                     Debug.Log("Floor");
                     break;
                 case 2: // Left
-                    if (currentSpeed.x > 0.0f)
+                    if (currentSpeed.x < 0.0f)
                         currentSpeed.x = 0.0f;
                     Punch(i, 2);
                     WallHit(i, true);
                     Debug.Log("Left");
                     break;
                 case 3: // Right
-                    if (currentSpeed.x < 0.0f)
+                    if (currentSpeed.x > 0.0f)
                         currentSpeed.x = 0.0f;
                     Punch(i, 3);
                     WallHit(i, true);
@@ -102,7 +103,7 @@ public class Controller : MonoBehaviour
     {
         Vector2 speed;
         if (walls[index].GetComponent<SnapGrow>() != null)
-            speed = walls[index].GetComponent<SnapGrow>().growthSpeed * 10;
+            speed = walls[index].GetComponent<SnapGrow>().growthSpeed * 100;
         else
             return;
 

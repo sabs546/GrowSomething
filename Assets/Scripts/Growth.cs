@@ -22,7 +22,7 @@ public class Growth : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (touching)
         {
