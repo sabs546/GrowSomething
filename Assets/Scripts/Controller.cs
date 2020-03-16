@@ -11,9 +11,11 @@ public class Controller : MonoBehaviour
     public Vector2 topSpeed;
     private Vector2 oldPos;
     private float defaultGravity;
+    private Vector2 resetPos;
     // Start is called before the first frame update
     void Start()
     {
+        resetPos = transform.position;
         col = GetComponent<Collider>();
         walls = GameObject.FindGameObjectsWithTag("Walls");
         defaultGravity = gravity;
@@ -62,7 +64,8 @@ public class Controller : MonoBehaviour
 
         for (int i = 0; i < walls.Length; i++)
         {
-            switch (col.CheckCollision(walls[i].transform.position, walls[i].transform.lossyScale / 2, oldPos))
+            switch (col.CheckCollision(walls[i].transform.position, walls[i].transform.lossyScale / 2, oldPos,
+                    walls[i].GetComponent<Collider>().killBlock))
             {
                 case 0:
                     WallHit(i, false);
@@ -97,6 +100,11 @@ public class Controller : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public void ResetPos()
+    {
+        transform.position = resetPos;
     }
 
     private void Punch(int index, int direction)

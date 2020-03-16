@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Collider : MonoBehaviour
 {
-    public int CheckCollision(Vector2 pos2, Vector2 scale2, Vector2 oldPos)
+    public bool killBlock;
+
+    public int CheckCollision(Vector2 pos2, Vector2 scale2, Vector2 oldPos, bool killer)
     {
         if (transform.position.x + transform.lossyScale.x / 2 > pos2.x - scale2.x && transform.position.x - transform.lossyScale.x / 2 < pos2.x + scale2.x &&
             transform.position.y + transform.lossyScale.y / 2 > pos2.y - scale2.y && transform.position.y - transform.lossyScale.y / 2 < pos2.y + scale2.y)
         {
+            if (killer)
+                GameObject.Find("Player").GetComponent<Controller>().ResetPos();
+
             Vector2 halfPlayer = transform.lossyScale / 2;
             if (oldPos.y > pos2.y + scale2.y)
             { // Ground
