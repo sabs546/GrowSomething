@@ -51,6 +51,9 @@ public class Controller : MonoBehaviour
                 currentSpeed.x -= 10.0f * Time.deltaTime;
         }
 
+        if (currentSpeed.x < 0.2f && currentSpeed.x > -0.2f && !Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            currentSpeed.x = 0.0f;
+
         if (currentSpeed.x > topSpeed.x)
             currentSpeed.x = topSpeed.x;
         else if (currentSpeed.x < -topSpeed.x)
